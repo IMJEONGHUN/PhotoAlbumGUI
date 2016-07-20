@@ -1,0 +1,300 @@
+package cs213.photoAlbum.simpleview;
+
+/**
+ * CmdView Class.
+ * 
+ * @author Tolby Lew <tolbyflew@gmail.com>
+ * @author Amar Bakir <wldkng14@yahoo.com>
+ * @version 1.0
+ * @since 01-20-2015
+ */
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
+
+import cs213.photoAlbum.control.Controller;
+import cs213.photoAlbum.model.Album;
+import cs213.photoAlbum.model.Backend;
+import cs213.photoAlbum.model.Photo;
+import cs213.photoAlbum.model.User;
+
+public class CmdView {
+	
+	public static Backend backend = new Backend();
+	public static Controller control = new Controller();
+	
+	/**
+	 * prints a list of all users
+	 */
+	public static void listUsers(){
+		
+	}
+	
+	/**
+	 * adds a user
+	 */
+	public static void addUser(){
+		
+	}
+	
+	/**
+	 * deletes a user
+	 */
+	public static void deleteUser(){
+		
+	}
+	
+	/**
+	 * logins a user based on an input id
+	 * @param userID is a string identifying the user
+	 * @return true if successful, else false
+	 */
+	public static boolean login(String userID){
+	
+		return true;
+	}
+	
+	/**
+	 * logout a user 
+	 */
+	public static void logout(){
+
+	}
+	
+	/**
+	 * Launch the application.
+	 * 
+	 * @param args Command line arguments
+	 */
+	public static void main(String args[]){
+		
+		//Command line args:
+		String command = null;
+		String userID = null;
+		String userName = null;
+		
+		//Backend stuff to load previous users
+		try{
+			backend.setUserDB(backend.readUsers());
+		} catch (FileNotFoundException e1){
+			
+		} catch (IOException e2){
+			
+		} catch (ClassNotFoundException e3){
+			
+		}
+		
+		if (args.length > 0){
+			//list users
+			if (command.equalsIgnoreCase("listusers")){
+				
+			}
+			//add users
+			else if (command.equalsIgnoreCase("adduser")){
+				if(args.length ==3){
+					userID = args[1];
+					userName = args[2];
+					
+				}
+				else{
+					System.out.println("Error: Invalid arguement number.");
+				}
+			}
+			//delete users
+			else if (command.equalsIgnoreCase("deleteuser")){
+				if(args.length ==2){
+					userID = args[1];
+					
+				}
+				else{
+					System.out.println("Error: Invalid arguement number.");
+				}
+				
+			}
+			//login as an existing user
+			else if (command.equalsIgnoreCase("login")){
+				if(args.length ==2){
+					userID = args[1];
+					
+				}
+				else{
+					System.out.println("Error: Invalid arguement number.");
+				}
+	
+			}
+		}
+		
+		
+	}
+	
+	public static void interactiveMode(){
+		
+		//Variables
+		BufferedReader read = new BufferedReader(new InputStreamReader(System.in));
+		String input = null;
+		boolean loginFlag = true;
+		
+		while(loginFlag){
+			try{
+				input = read.readLine();
+				StringTokenizer st = new StringTokenizer(input);
+				String[] tokens= new String[100];
+				
+				tokens[0] = st.nextToken();
+				
+				
+				//command options
+				if (tokens[0] != null){
+					if(tokens[0].equalsIgnoreCase("createalbum")){
+						
+					}
+					else if(tokens[0].equalsIgnoreCase("deletalbum")){
+						
+					}
+					else if(tokens[0].equalsIgnoreCase("listalbums")){
+						
+					}
+					else if(tokens[0].equalsIgnoreCase("listphotos")){
+						
+					}
+					else if(tokens[0].equalsIgnoreCase("addphoto")){
+						
+					}
+					else if(tokens[0].equalsIgnoreCase("movephoto")){
+						
+					}
+					else if(tokens[0].equalsIgnoreCase("removephoto")){
+						
+					}
+					else if(tokens[0].equalsIgnoreCase("addtag")){
+						
+					}
+					else if(tokens[0].equalsIgnoreCase("deletetag")){
+						
+					}
+					else if(tokens[0].equalsIgnoreCase("listphotoinfo")){
+						
+					}
+					else if(tokens[0].equalsIgnoreCase("getphotosbydate")){
+						
+					}
+					else if(tokens[0].equalsIgnoreCase("getphotosbytag")){
+						
+					}
+					else if(tokens[0].equalsIgnoreCase("logout")){
+						
+					}
+					else{
+						System.out.println("Error: Invalid input");
+					}
+					
+				}
+				else{
+					System.out.println("Error: Invalid input");
+				}
+			} catch (IOException e1){
+				System.out.println("Error: Invalid input");
+			} catch (NoSuchElementException e2){
+				System.out.println("Error: Invalid input");
+			}
+		}
+		
+	}
+	
+	/**
+	 * Checks that input dates are of the format: MM/DD/YYYY-HH:MM:SS
+	 * DOES NOT CHECK IF DATE IS VALID, I.E. if Feb 31 is a valid date
+	 * @param date is inputed date
+	 * @return true if date is of the correct format, false otherwise
+	 */
+	public static boolean validateDateFormat(String date){
+		
+		int month = 0, day = 0, year = 0, hour = 0 , minute = 0, seconds = 0;
+		
+		//Checks for correct separators
+		if(date.length() != 19){
+			return false;
+		}
+		if(date.charAt(2) != '/'){
+			return false;
+		}
+		if(date.charAt(5) != '/'){
+			return false;
+		}
+		if(date.charAt(10) != '-'){
+			return false;
+		}
+		if(date.charAt(13) != ':'){
+			return false;
+		}
+		if(date.charAt(16) != ':'){
+			return false;
+		}
+		
+		//check that what is in between separators are numbers
+		try{
+			month = Integer.parseInt(date.substring(0, 2));
+			day = Integer.parseInt(date.substring(3, 5));
+			year = Integer.parseInt(date.substring(6, 10));
+			hour = Integer.parseInt(date.substring(11, 13));
+			minute = Integer.parseInt(date.substring(14, 16));
+			seconds = Integer.parseInt(date.substring(17, 19));
+		}
+		catch (NumberFormatException e){
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Checks that input contains a tag, marked by ':'
+	 * @return true if tag exists in inputt, false otherwise
+	 */
+	public static boolean tagExists(String input){
+		if(input.contains(":")){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * parses 'type field' from input tag, assuming that first ':'separates 'type' from 'value' 
+	 * @param input
+	 * @return the parsed type
+	 */
+	public static String parseType(String input){
+		int i = 0;
+		String parsedType;
+		for (i = 0; i < input.length(); i++){
+			if (input.charAt(i) == ':'){
+				break;
+			}
+		}
+		
+		parsedType = input.substring(0, i);
+		return parsedType;
+	}
+	
+	/**
+	 * parses 'value field' from input tag, assuming that first ':'separates 'type' from 'value' 
+	 * @param input
+	 * @return the parsed value
+	 */
+	public static String parseValue(String input){
+		int i = 0;
+		String parsedVal;
+		for (i = 0; i < input.length(); i++){
+			if (input.charAt(i) == ':'){
+				break;
+			}
+		}
+		
+		parsedVal = input.substring(i+1, input.length());
+		return parsedVal;
+	}
+}
